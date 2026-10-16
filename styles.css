@@ -1,0 +1,1226 @@
+/* ==========================================================================
+   OmniCalc Stylesheet - Modern All-in-One Calculator
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Themes & CSS Custom Properties
+   -------------------------------------------------------------------------- */
+:root,
+[data-theme="obsidian"] {
+    --bg-app: #080a0f;
+    --bg-page-gradient: radial-gradient(circle at 50% 10%, rgba(99, 102, 241, 0.15) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                        #080a0f;
+    --card-bg: rgba(17, 24, 39, 0.78);
+    --card-border: rgba(255, 255, 255, 0.09);
+    --card-glow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 30px -5px rgba(99, 102, 241, 0.25);
+
+    --screen-bg: rgba(11, 15, 25, 0.85);
+    --screen-border: rgba(255, 255, 255, 0.06);
+
+    --btn-num-bg: rgba(255, 255, 255, 0.04);
+    --btn-num-hover: rgba(255, 255, 255, 0.09);
+    --btn-num-text: #f8fafc;
+    --btn-border: rgba(255, 255, 255, 0.06);
+
+    --btn-fn-bg: rgba(99, 102, 241, 0.12);
+    --btn-fn-hover: rgba(99, 102, 241, 0.22);
+    --btn-fn-text: #a5b4fc;
+
+    --btn-op-bg: rgba(99, 102, 241, 0.22);
+    --btn-op-hover: rgba(99, 102, 241, 0.35);
+    --btn-op-text: #818cf8;
+    --btn-op-border: rgba(99, 102, 241, 0.35);
+
+    --btn-equals-bg: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+    --btn-equals-hover: linear-gradient(135deg, #4f46e5 0%, #0891b2 100%);
+    --btn-equals-text: #ffffff;
+    --btn-equals-shadow: 0 8px 25px rgba(99, 102, 241, 0.45);
+
+    --btn-danger-bg: rgba(239, 68, 68, 0.15);
+    --btn-danger-hover: rgba(239, 68, 68, 0.25);
+    --btn-danger-text: #f87171;
+    --btn-danger-border: rgba(239, 68, 68, 0.3);
+
+    --primary-accent: #6366f1;
+    --accent-cyan: #06b6d4;
+    --accent-emerald: #10b981;
+    --accent-gradient: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-subtle: #64748b;
+}
+
+[data-theme="midnight"] {
+    --bg-app: #030407;
+    --bg-page-gradient: radial-gradient(circle at 50% 20%, rgba(139, 92, 246, 0.14) 0%, transparent 60%), #030407;
+    --card-bg: rgba(10, 11, 16, 0.88);
+    --card-border: rgba(255, 255, 255, 0.07);
+    --card-glow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 25px -5px rgba(139, 92, 246, 0.3);
+
+    --screen-bg: rgba(5, 6, 9, 0.95);
+    --screen-border: rgba(255, 255, 255, 0.05);
+
+    --btn-num-bg: rgba(255, 255, 255, 0.03);
+    --btn-num-hover: rgba(255, 255, 255, 0.08);
+    --btn-num-text: #f1f5f9;
+
+    --btn-fn-bg: rgba(139, 92, 246, 0.12);
+    --btn-fn-hover: rgba(139, 92, 246, 0.22);
+    --btn-fn-text: #c4b5fd;
+
+    --btn-op-bg: rgba(139, 92, 246, 0.25);
+    --btn-op-hover: rgba(139, 92, 246, 0.38);
+    --btn-op-text: #a78bfa;
+    --btn-op-border: rgba(139, 92, 246, 0.4);
+
+    --btn-equals-bg: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
+    --btn-equals-hover: linear-gradient(135deg, #7c3aed 0%, #c026d3 100%);
+    --btn-equals-text: #ffffff;
+    --btn-equals-shadow: 0 8px 25px rgba(139, 92, 246, 0.45);
+
+    --primary-accent: #8b5cf6;
+    --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+}
+
+[data-theme="emerald"] {
+    --bg-app: #06110d;
+    --bg-page-gradient: radial-gradient(circle at 50% 15%, rgba(16, 185, 129, 0.18) 0%, transparent 60%), #06110d;
+    --card-bg: rgba(9, 24, 18, 0.85);
+    --card-border: rgba(16, 185, 129, 0.15);
+    --card-glow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 30px -5px rgba(16, 185, 129, 0.25);
+
+    --screen-bg: rgba(4, 14, 10, 0.95);
+    --screen-border: rgba(16, 185, 129, 0.12);
+
+    --btn-num-bg: rgba(255, 255, 255, 0.035);
+    --btn-num-hover: rgba(255, 255, 255, 0.08);
+    --btn-num-text: #ecfdf5;
+
+    --btn-fn-bg: rgba(16, 185, 129, 0.12);
+    --btn-fn-hover: rgba(16, 185, 129, 0.22);
+    --btn-fn-text: #6ee7b7;
+
+    --btn-op-bg: rgba(16, 185, 129, 0.2);
+    --btn-op-hover: rgba(16, 185, 129, 0.32);
+    --btn-op-text: #34d399;
+    --btn-op-border: rgba(16, 185, 129, 0.35);
+
+    --btn-equals-bg: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    --btn-equals-hover: linear-gradient(135deg, #059669 0%, #0891b2 100%);
+    --btn-equals-text: #ffffff;
+    --btn-equals-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+
+    --primary-accent: #10b981;
+    --accent-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+}
+
+[data-theme="titanium"] {
+    --bg-app: #e2e8f0;
+    --bg-page-gradient: radial-gradient(circle at 50% 15%, rgba(99, 102, 241, 0.1) 0%, transparent 60%), #f1f5f9;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-border: rgba(0, 0, 0, 0.08);
+    --card-glow: 0 20px 45px -10px rgba(0, 0, 0, 0.12);
+
+    --screen-bg: #f8fafc;
+    --screen-border: rgba(0, 0, 0, 0.08);
+
+    --btn-num-bg: #ffffff;
+    --btn-num-hover: #f1f5f9;
+    --btn-num-text: #0f172a;
+    --btn-border: rgba(0, 0, 0, 0.06);
+
+    --btn-fn-bg: #e2e8f0;
+    --btn-fn-hover: #cbd5e1;
+    --btn-fn-text: #334155;
+
+    --btn-op-bg: #ede9fe;
+    --btn-op-hover: #ddd6fe;
+    --btn-op-text: #6366f1;
+    --btn-op-border: #c4b5fd;
+
+    --btn-equals-bg: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    --btn-equals-hover: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+    --btn-equals-text: #ffffff;
+    --btn-equals-shadow: 0 6px 18px rgba(99, 102, 241, 0.35);
+
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-subtle: #94a3b8;
+}
+
+/* --------------------------------------------------------------------------
+   Reset & Base Layout
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    font-size: 16px;
+    touch-action: manipulation;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-page-gradient);
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    overflow-x: hidden;
+    transition: background 0.35s ease;
+}
+
+.gradient-text {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* --------------------------------------------------------------------------
+   Calculator Main Card Container
+   -------------------------------------------------------------------------- */
+.calculator-app-wrapper {
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.calculator-card {
+    position: relative;
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 28px;
+    padding: 1.5rem;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: var(--card-glow);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* --------------------------------------------------------------------------
+   App Header & Controls
+   -------------------------------------------------------------------------- */
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.app-logo {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: var(--accent-gradient);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.header-brand:hover .app-logo {
+    transform: rotate(-10deg) scale(1.05);
+}
+
+.app-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.app-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+.app-version {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-subtle);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon-btn {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--btn-border);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+}
+
+.icon-btn:active {
+    transform: scale(0.92);
+}
+
+.icon-btn.muted {
+    color: var(--btn-danger-text);
+}
+
+.history-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 8px;
+    background: var(--primary-accent);
+    color: #ffffff;
+    font-size: 0.65rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   Mode Navigation Tabs
+   -------------------------------------------------------------------------- */
+.mode-navigation {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 4px;
+    margin-bottom: 1.25rem;
+    gap: 4px;
+}
+
+.mode-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.6rem 0.5rem;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+}
+
+.mode-tab:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.mode-tab.active {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--card-border);
+}
+
+.mode-tab.active i {
+    color: var(--primary-accent);
+}
+
+/* --------------------------------------------------------------------------
+   Calculator Screen Display
+   -------------------------------------------------------------------------- */
+.display-section {
+    background: var(--screen-bg);
+    border: 1px solid var(--screen-border);
+    border-radius: 20px;
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 130px;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+    position: relative;
+    user-select: text;
+}
+
+.display-indicators {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 22px;
+}
+
+.indicator-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.indicator-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--accent-cyan);
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.copy-display-btn {
+    position: relative;
+    background: transparent;
+    border: none;
+    color: var(--text-subtle);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.copy-display-btn:hover {
+    color: var(--text-primary);
+    transform: scale(1.1);
+}
+
+.copy-tooltip {
+    position: absolute;
+    right: 0;
+    top: -28px;
+    background: var(--accent-emerald);
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(5px);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.copy-tooltip.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.display-expression {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text-subtle);
+    text-align: right;
+    min-height: 22px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    margin-top: 0.25rem;
+}
+
+.display-expression::-webkit-scrollbar {
+    display: none;
+}
+
+.display-main {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: right;
+    line-height: 1.1;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    transition: font-size 0.15s ease;
+}
+
+.display-main::-webkit-scrollbar {
+    display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Keypads & Buttons Grid
+   -------------------------------------------------------------------------- */
+.keypad-panel {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.keypad-panel.active {
+    display: flex;
+}
+
+.keypad-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.keypad-grid-5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+
+.sci-sub-bar {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 2px;
+}
+
+/* Generic Calculator Button */
+.calc-btn {
+    appearance: none;
+    border: 1px solid var(--btn-border);
+    border-radius: 14px;
+    font-family: 'Outfit', -apple-system, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.calc-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.calc-btn:hover {
+    transform: translateY(-2px);
+}
+
+.calc-btn:hover::after {
+    opacity: 1;
+}
+
+.calc-btn:active,
+.calc-btn.keyboard-active {
+    transform: translateY(2px) scale(0.96);
+}
+
+/* Number Buttons */
+.btn-number {
+    background: var(--btn-num-bg);
+    color: var(--btn-num-text);
+}
+
+.btn-number:hover {
+    background: var(--btn-num-hover);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Function Buttons (%, ±, etc.) */
+.btn-function {
+    background: var(--btn-fn-bg);
+    color: var(--btn-fn-text);
+    font-size: 1.15rem;
+}
+
+.btn-function:hover {
+    background: var(--btn-fn-hover);
+}
+
+/* Operator Buttons (+, -, ×, ÷) */
+.btn-operator {
+    background: var(--btn-op-bg);
+    color: var(--btn-op-text);
+    border-color: var(--btn-op-border);
+    font-size: 1.45rem;
+}
+
+.btn-operator:hover {
+    background: var(--btn-op-hover);
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+}
+
+/* Equals Button */
+.btn-equals {
+    background: var(--btn-equals-bg);
+    color: var(--btn-equals-text);
+    border: none;
+    box-shadow: var(--btn-equals-shadow);
+    font-size: 1.5rem;
+}
+
+.btn-equals:hover {
+    background: var(--btn-equals-hover);
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.6);
+    transform: translateY(-3px);
+}
+
+/* Danger / Clear Buttons (AC, C) */
+.btn-danger {
+    background: var(--btn-danger-bg);
+    color: var(--btn-danger-text);
+    border-color: var(--btn-danger-border);
+}
+
+.btn-danger:hover {
+    background: var(--btn-danger-hover);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+/* Utility / Backspace */
+.btn-utility {
+    background: var(--btn-fn-bg);
+    color: var(--btn-fn-text);
+    font-size: 1.1rem;
+}
+
+.btn-utility:hover {
+    background: var(--btn-fn-hover);
+}
+
+/* Memory Buttons */
+.btn-memory {
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    height: 42px;
+}
+
+.btn-memory:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+/* Scientific Mode Buttons */
+.btn-sci {
+    background: var(--btn-fn-bg);
+    color: var(--btn-fn-text);
+    font-size: 0.95rem;
+    height: 46px;
+    border-radius: 12px;
+}
+
+.btn-sci:hover {
+    background: var(--btn-fn-hover);
+    color: var(--text-primary);
+}
+
+.btn-sci-toggle {
+    background: rgba(6, 182, 212, 0.12);
+    color: var(--accent-cyan);
+    border-color: rgba(6, 182, 212, 0.25);
+    font-size: 0.85rem;
+    height: 42px;
+}
+
+.btn-sci-toggle:hover {
+    background: rgba(6, 182, 212, 0.22);
+}
+
+/* --------------------------------------------------------------------------
+   MODE 3: Cash & Change Calculator Styles
+   -------------------------------------------------------------------------- */
+.cash-calc-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.cash-header {
+    text-align: center;
+    margin-bottom: 0.25rem;
+}
+
+.cash-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    color: var(--accent-emerald);
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+}
+
+.cash-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.cash-inputs-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.cash-input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.cash-input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.cash-input-field label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.input-currency-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.currency-symbol {
+    position: absolute;
+    left: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-subtle);
+    pointer-events: none;
+}
+
+.input-currency-wrap input {
+    width: 100%;
+    background: var(--screen-bg);
+    border: 1px solid var(--btn-border);
+    border-radius: 12px;
+    padding: 0.75rem 0.75rem 0.75rem 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+.input-currency-wrap input:focus {
+    outline: none;
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+
+/* Quick Tender Shortcuts */
+.quick-cash-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.quick-cash-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-subtle);
+    margin-right: 0.25rem;
+}
+
+.quick-cash-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--btn-border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.35rem 0.65rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-cash-btn:hover {
+    background: rgba(99, 102, 241, 0.15);
+    border-color: var(--primary-accent);
+    transform: translateY(-1px);
+}
+
+.quick-cash-btn.exact-btn {
+    background: rgba(6, 182, 212, 0.12);
+    border-color: rgba(6, 182, 212, 0.3);
+    color: var(--accent-cyan);
+}
+
+.cash-actions-row {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 0.25rem;
+}
+
+/* Change Summary Card */
+.change-summary-card {
+    background: var(--screen-bg);
+    border: 1px solid var(--screen-border);
+    border-radius: 18px;
+    padding: 1.1rem;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.change-summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--btn-border);
+}
+
+.change-summary-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.change-summary-amount {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--accent-emerald);
+    line-height: 1.2;
+}
+
+.change-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+}
+
+.change-status-pill.status-success {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--accent-emerald);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.change-status-pill.status-warning {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.change-status-pill.status-exact {
+    background: rgba(6, 182, 212, 0.15);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.denominations-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.denominations-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    max-height: 220px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.denominations-grid::-webkit-scrollbar {
+    width: 4px;
+}
+
+.denominations-grid::-webkit-scrollbar-thumb {
+    background: var(--btn-border);
+    border-radius: 4px;
+}
+
+.denom-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 0.85rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--btn-border);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.denom-card:hover {
+    border-color: rgba(99, 102, 241, 0.3);
+    transform: translateX(3px);
+}
+
+.denom-count-badge {
+    background: var(--primary-accent);
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 800;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    margin-right: 0.75rem;
+}
+
+.denom-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.denom-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.denom-subtotal {
+    font-size: 0.75rem;
+    color: var(--text-subtle);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.denom-icon {
+    color: var(--text-subtle);
+    font-size: 1.1rem;
+}
+
+.denomination-notice {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 1rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   History Tape Drawer / Flyout
+   -------------------------------------------------------------------------- */
+.history-drawer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--card-bg);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border-radius: 28px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    transform: translateX(105%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.history-drawer.open {
+    transform: translateX(0);
+}
+
+.history-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.history-drawer-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.history-drawer-title i {
+    color: var(--primary-accent);
+}
+
+.history-header-actions {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.history-action-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--btn-border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.history-action-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.history-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    padding-right: 4px;
+}
+
+.history-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+    background: var(--btn-border);
+    border-radius: 4px;
+}
+
+.history-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-subtle);
+    gap: 0.5rem;
+    text-align: center;
+}
+
+.history-empty i {
+    font-size: 2.2rem;
+    opacity: 0.4;
+    margin-bottom: 0.5rem;
+}
+
+.history-empty p {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.history-empty span {
+    font-size: 0.78rem;
+}
+
+.history-item {
+    background: var(--screen-bg);
+    border: 1px solid var(--screen-border);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.history-item:hover {
+    border-color: var(--primary-accent);
+    transform: translateX(3px);
+    background: rgba(99, 102, 241, 0.08);
+}
+
+.history-item-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+}
+
+.history-item-time {
+    font-size: 0.7rem;
+    color: var(--text-subtle);
+}
+
+.history-item-expr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.history-item-result {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: right;
+}
+
+/* --------------------------------------------------------------------------
+   App Footer / Shortcuts
+   -------------------------------------------------------------------------- */
+.app-footer {
+    text-align: center;
+    width: 100%;
+}
+
+.keyboard-guide {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.guide-item {
+    font-size: 0.75rem;
+    color: var(--text-subtle);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+kbd {
+    display: inline-block;
+    padding: 0.15rem 0.4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--btn-border);
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.footer-note {
+    font-size: 0.75rem;
+    color: var(--text-subtle);
+}
+
+/* --------------------------------------------------------------------------
+   Mobile View & Responsive Adjustments
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+    body {
+        padding: 0.5rem;
+        align-items: flex-start;
+    }
+
+    .calculator-app-wrapper {
+        max-width: 100%;
+    }
+
+    .calculator-card {
+        border-radius: 20px;
+        padding: 1.15rem;
+    }
+
+    .display-section {
+        min-height: 110px;
+        padding: 0.85rem 1rem;
+    }
+
+    .display-main {
+        font-size: 2.6rem;
+    }
+
+    .calc-btn {
+        height: 52px;
+        font-size: 1.15rem;
+        border-radius: 12px;
+    }
+
+    .btn-sci {
+        height: 42px;
+        font-size: 0.88rem;
+    }
+
+    .mode-tab {
+        padding: 0.5rem 0.35rem;
+        font-size: 0.78rem;
+    }
+
+    .keyboard-guide {
+        display: none;
+    }
+
+    .cash-input-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 360px) {
+    .calculator-card {
+        padding: 0.85rem;
+    }
+
+    .calc-btn {
+        height: 46px;
+        font-size: 1.05rem;
+    }
+
+    .display-main {
+        font-size: 2.2rem;
+    }
+}

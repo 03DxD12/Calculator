@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="obsidian">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>OmniCalc | Modern All-in-One Calculator</title>
+    <meta name="description" content="A modern, high-precision Standard, Scientific, and Philippine Peso Change Denomination Calculator with sleek glassmorphism design, tactile effects, and keyboard shortcuts.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calculator-app-wrapper">
+        <!-- Main Calculator Card Container -->
+        <main class="calculator-card" id="calculatorCard">
+            <!-- App Header & Navigation Bar -->
+            <header class="app-header">
+                <div class="header-brand">
+                    <div class="app-logo">
+                        <i class="fa-solid fa-calculator"></i>
+                    </div>
+                    <div class="app-meta">
+                        <span class="app-title">Omni<span class="gradient-text">Calc</span></span>
+                        <span class="app-version">PRO v2.5</span>
+                    </div>
+                </div>
+
+                <!-- Header Quick Settings & History Trigger -->
+                <div class="header-controls">
+                    <button class="icon-btn" id="soundToggleBtn" title="Toggle Sound Feedback" aria-label="Toggle Sound">
+                        <i class="fa-solid fa-volume-high" id="soundIcon"></i>
+                    </button>
+                    <button class="icon-btn" id="themeToggleBtn" title="Change Theme" aria-label="Toggle Theme">
+                        <i class="fa-solid fa-palette"></i>
+                    </button>
+                    <button class="icon-btn" id="historyToggleBtn" title="View History Tape" aria-label="Toggle History">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span class="history-badge" id="historyCount">0</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Mode Navigation Bar -->
+            <nav class="mode-navigation" aria-label="Calculator Modes">
+                <button class="mode-tab active" data-mode="standard">
+                    <i class="fa-solid fa-equals"></i>
+                    <span>Standard</span>
+                </button>
+                <button class="mode-tab" data-mode="scientific">
+                    <i class="fa-solid fa-atom"></i>
+                    <span>Scientific</span>
+                </button>
+                <button class="mode-tab" data-mode="cash">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                    <span>Cash & Change</span>
+                </button>
+            </nav>
+
+            <!-- Dynamic Display Screen (For Standard & Scientific) -->
+            <section class="display-section" id="calcDisplaySection">
+                <div class="display-indicators">
+                    <div class="indicator-group">
+                        <span class="indicator-badge" id="angleModeIndicator" style="display: none;">DEG</span>
+                        <span class="indicator-badge" id="memoryIndicator" style="display: none;">M</span>
+                    </div>
+                    <button class="copy-display-btn" id="copyDisplayBtn" title="Copy Result">
+                        <i class="fa-regular fa-copy"></i>
+                        <span class="copy-tooltip" id="copyTooltip">Copied!</span>
+                    </button>
+                </div>
+
+                <div class="display-expression" id="displayExpression" aria-live="polite"></div>
+                <div class="display-main" id="displayMain" aria-live="polite">0</div>
+            </section>
+
+            <!-- MODE 1: Standard Keypad -->
+            <div class="keypad-panel active" id="standardKeypad">
+                <!-- Memory & Utility Row -->
+                <div class="keypad-grid-5">
+                    <button class="calc-btn btn-memory" data-action="mc">MC</button>
+                    <button class="calc-btn btn-memory" data-action="mr">MR</button>
+                    <button class="calc-btn btn-memory" data-action="m-plus">M+</button>
+                    <button class="calc-btn btn-memory" data-action="m-minus">M-</button>
+                    <button class="calc-btn btn-utility" data-action="backspace" title="Delete Last (Backspace)" aria-label="Backspace">
+                        <i class="fa-solid fa-delete-left"></i>
+                    </button>
+                </div>
+
+                <!-- Main Standard Grid (4 Columns) -->
+                <div class="keypad-grid-4">
+                    <button class="calc-btn btn-danger" data-action="clear" data-key="Escape">AC</button>
+                    <button class="calc-btn btn-function" data-action="negate">±</button>
+                    <button class="calc-btn btn-function" data-action="percent" data-key="%">%</button>
+                    <button class="calc-btn btn-operator" data-action="divide" data-key="/">÷</button>
+
+                    <button class="calc-btn btn-number" data-number="7" data-key="7">7</button>
+                    <button class="calc-btn btn-number" data-number="8" data-key="8">8</button>
+                    <button class="calc-btn btn-number" data-number="9" data-key="9">9</button>
+                    <button class="calc-btn btn-operator" data-action="multiply" data-key="*">×</button>
+
+                    <button class="calc-btn btn-number" data-number="4" data-key="4">4</button>
+                    <button class="calc-btn btn-number" data-number="5" data-key="5">5</button>
+                    <button class="calc-btn btn-number" data-number="6" data-key="6">6</button>
+                    <button class="calc-btn btn-operator" data-action="subtract" data-key="-">−</button>
+
+                    <button class="calc-btn btn-number" data-number="1" data-key="1">1</button>
+                    <button class="calc-btn btn-number" data-number="2" data-key="2">2</button>
+                    <button class="calc-btn btn-number" data-number="3" data-key="3">3</button>
+                    <button class="calc-btn btn-operator" data-action="add" data-key="+">+</button>
+
+                    <button class="calc-btn btn-number" data-number="0" data-key="0">0</button>
+                    <button class="calc-btn btn-number" data-number="00">00</button>
+                    <button class="calc-btn btn-number" data-action="decimal" data-key=".">.</button>
+                    <button class="calc-btn btn-equals" data-action="equals" data-key="Enter">=</button>
+                </div>
+            </div>
+
+            <!-- MODE 2: Scientific Keypad -->
+            <div class="keypad-panel" id="scientificKeypad">
+                <!-- Angle Mode & Secondary Functions Bar -->
+                <div class="sci-sub-bar">
+                    <button class="calc-btn btn-sci-toggle" id="degRadToggle">DEG / RAD</button>
+                    <button class="calc-btn btn-memory" data-action="clear-entry">CE</button>
+                    <button class="calc-btn btn-danger" data-action="clear">AC</button>
+                    <button class="calc-btn btn-utility" data-action="backspace" aria-label="Backspace">
+                        <i class="fa-solid fa-delete-left"></i>
+                    </button>
+                </div>
+
+                <!-- Scientific 5-Column Grid -->
+                <div class="keypad-grid-5">
+                    <button class="calc-btn btn-sci" data-action="sin">sin</button>
+                    <button class="calc-btn btn-sci" data-action="cos">cos</button>
+                    <button class="calc-btn btn-sci" data-action="tan">tan</button>
+                    <button class="calc-btn btn-sci" data-action="pi">π</button>
+                    <button class="calc-btn btn-sci" data-action="e">e</button>
+
+                    <button class="calc-btn btn-sci" data-action="asin">sin⁻¹</button>
+                    <button class="calc-btn btn-sci" data-action="acos">cos⁻¹</button>
+                    <button class="calc-btn btn-sci" data-action="atan">tan⁻¹</button>
+                    <button class="calc-btn btn-sci" data-action="open-paren" data-key="(">(</button>
+                    <button class="calc-btn btn-sci" data-action="close-paren" data-key=")">)</button>
+
+                    <button class="calc-btn btn-sci" data-action="sqrt">√x</button>
+                    <button class="calc-btn btn-sci" data-action="square">x²</button>
+                    <button class="calc-btn btn-sci" data-action="power" data-key="^">xʸ</button>
+                    <button class="calc-btn btn-sci" data-action="log">log</button>
+                    <button class="calc-btn btn-sci" data-action="ln">ln</button>
+
+                    <button class="calc-btn btn-sci" data-action="factorial">x!</button>
+                    <button class="calc-btn btn-sci" data-action="reciprocal">1/x</button>
+                    <button class="calc-btn btn-sci" data-action="abs">|x|</button>
+                    <button class="calc-btn btn-sci" data-action="percent">%</button>
+                    <button class="calc-btn btn-operator" data-action="divide">÷</button>
+                </div>
+
+                <!-- Lower Numbers & Operations for Scientific -->
+                <div class="keypad-grid-4" style="margin-top: 8px;">
+                    <button class="calc-btn btn-number" data-number="7">7</button>
+                    <button class="calc-btn btn-number" data-number="8">8</button>
+                    <button class="calc-btn btn-number" data-number="9">9</button>
+                    <button class="calc-btn btn-operator" data-action="multiply">×</button>
+
+                    <button class="calc-btn btn-number" data-number="4">4</button>
+                    <button class="calc-btn btn-number" data-number="5">5</button>
+                    <button class="calc-btn btn-number" data-number="6">6</button>
+                    <button class="calc-btn btn-operator" data-action="subtract">−</button>
+
+                    <button class="calc-btn btn-number" data-number="1">1</button>
+                    <button class="calc-btn btn-number" data-number="2">2</button>
+                    <button class="calc-btn btn-number" data-number="3">3</button>
+                    <button class="calc-btn btn-operator" data-action="add">+</button>
+
+                    <button class="calc-btn btn-function" data-action="negate">±</button>
+                    <button class="calc-btn btn-number" data-number="0">0</button>
+                    <button class="calc-btn btn-number" data-action="decimal">.</button>
+                    <button class="calc-btn btn-equals" data-action="equals">=</button>
+                </div>
+            </div>
+
+            <!-- MODE 3: Cash & Change Denomination Calculator (PHP) -->
+            <div class="keypad-panel" id="cashKeypad">
+                <div class="cash-calc-wrapper">
+                    <div class="cash-header">
+                        <div class="cash-badge">
+                            <i class="fa-solid fa-coins"></i>
+                            <span>Philippine Peso (PHP ₱)</span>
+                        </div>
+                        <p class="cash-subtitle">Compute exact change & optimal bill/coin distribution</p>
+                    </div>
+
+                    <form class="cash-inputs-form" id="cashForm" onsubmit="event.preventDefault(); computeChange();">
+                        <div class="cash-input-row">
+                            <div class="cash-input-field">
+                                <label for="cashPrice">Total Price / Bill (₱)</label>
+                                <div class="input-currency-wrap">
+                                    <span class="currency-symbol">₱</span>
+                                    <input type="number" step="0.01" min="0" id="cashPrice" placeholder="0.00" required>
+                                </div>
+                            </div>
+                            <div class="cash-input-field">
+                                <label for="cashPaid">Amount Tendered / Paid (₱)</label>
+                                <div class="input-currency-wrap">
+                                    <span class="currency-symbol">₱</span>
+                                    <input type="number" step="0.01" min="0" id="cashPaid" placeholder="0.00" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Cash Shortcut Buttons -->
+                        <div class="quick-cash-row">
+                            <span class="quick-cash-label">Quick Tender:</span>
+                            <button type="button" class="quick-cash-btn" onclick="addQuickCash(50)">+₱50</button>
+                            <button type="button" class="quick-cash-btn" onclick="addQuickCash(100)">+₱100</button>
+                            <button type="button" class="quick-cash-btn" onclick="addQuickCash(500)">+₱500</button>
+                            <button type="button" class="quick-cash-btn" onclick="addQuickCash(1000)">+₱1,000</button>
+                            <button type="button" class="quick-cash-btn exact-btn" onclick="setExactCash()">Exact</button>
+                        </div>
+
+                        <div class="cash-actions-row">
+                            <button type="button" class="calc-btn btn-danger" style="flex: 1;" onclick="resetCashCalculator()">Clear</button>
+                            <button type="button" class="calc-btn btn-equals" style="flex: 2;" onclick="computeChange()">
+                                <i class="fa-solid fa-calculator"></i>
+                                <span>Calculate Change</span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Change Result Summary Card -->
+                    <div class="change-summary-card" id="changeSummaryCard" style="display: none;">
+                        <div class="change-summary-header">
+                            <div>
+                                <span class="change-summary-label">Total Change Due</span>
+                                <h2 class="change-summary-amount" id="totalChangeAmount">₱0.00</h2>
+                            </div>
+                            <div class="change-status-pill" id="changeStatusPill">
+                                <i class="fa-solid fa-check"></i> Complete
+                            </div>
+                        </div>
+
+                        <!-- Detailed Denominations Breakdown Grid -->
+                        <div class="denominations-container">
+                            <h4 class="denominations-title">
+                                <i class="fa-solid fa-money-bill-transfer"></i>
+                                <span>Denomination Breakdown</span>
+                            </h4>
+                            <div class="denominations-grid" id="denominationsGrid">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide-in History Tape Drawer / Modal -->
+            <aside class="history-drawer" id="historyDrawer" aria-label="Calculation History Tape">
+                <div class="history-drawer-header">
+                    <div class="history-drawer-title">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span>History Tape</span>
+                    </div>
+                    <div class="history-header-actions">
+                        <button class="history-action-btn" id="clearHistoryBtn" title="Clear All History">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </button>
+                        <button class="history-action-btn" id="closeHistoryBtn" title="Close Drawer">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="history-list" id="historyList">
+                    <div class="history-empty" id="historyEmpty">
+                        <i class="fa-solid fa-inbox"></i>
+                        <p>No calculation history yet</p>
+                        <span>Perform a calculation to see history</span>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Keyboard Guide Bar / Footer -->
+        <footer class="app-footer">
+            <div class="keyboard-guide">
+                <span class="guide-item"><kbd>0-9</kbd> Digits</span>
+                <span class="guide-item"><kbd>+</kbd> <kbd>−</kbd> <kbd>×</kbd> <kbd>÷</kbd> Ops</span>
+                <span class="guide-item"><kbd>Enter</kbd> Calculate</span>
+                <span class="guide-item"><kbd>Esc</kbd> Clear</span>
+                <span class="guide-item"><kbd>⌫</kbd> Backspace</span>
+            </div>
+            <p class="footer-note">OmniCalc • Precision Web Calculator</p>
+        </footer>
+    </div>
+
+    <!-- Audio Synthesis & Core Calculator Script -->
+    <script>
+        /**
+         * Web Audio Synthesizer for Tactile Click Sound
+         */
+        class SoundFX {
+            constructor() {
+                this.enabled = true;
+                this.audioCtx = null;
+            }
+
+            init() {
+                if (!this.audioCtx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContext) {
+                        this.audioCtx = new AudioContext();
+                    }
+                }
+                if (this.audioCtx && this.audioCtx.state === 'suspended') {
+                    this.audioCtx.resume();
+                }
+            }
+
+            playClick(freq = 600, duration = 0.03, type = 'sine') {
+                if (!this.enabled) return;
+                try {
+                    this.init();
+                    if (!this.audioCtx) return;
+
+                    const osc = this.audioCtx.createOscillator();
+                    const gain = this.audioCtx.createGain();
+
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, this.audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(freq * 0.5, this.audioCtx.currentTime + duration);
+
+                    gain.gain.setValueAtTime(0.08, this.audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + duration);
+
+                    osc.connect(gain);
+                    gain.connect(this.audioCtx.destination);
+
+                    osc.start();
+                    osc.stop(this.audioCtx.currentTime + duration);
+                } catch (e) {
+                    // Audio context blocked or unsupported
+                }
+            }
+
+            playOperator() {
+                this.playClick(850, 0.04, 'triangle');
+            }
+
+            playEquals() {
+                this.playClick(1100, 0.06, 'sine');
+            }
+
+            playClear() {
+                this.playClick(350, 0.05, 'square');
+            }
+
+            vibrate() {
+                if (navigator.vibrate) {
+                    navigator.vibrate(12);
+                }
+            }
+        }
+
+        const soundFX = new SoundFX();
+
+        /**
+         * Calculator Core State Machine
+         */
+        class Calculator {
+            constructor() {
+                this.currentInput = '0';
+                this.previousInput = '';
+                this.operator = null;
+                this.waitingForOperand = false;
+                this.angleMode = 'DEG'; // 'DEG' or 'RAD'
+                this.memory = 0;
+                this.history = JSON.parse(localStorage.getItem('omnicalc_history') || '[]');
+
+                this.dom = {
+                    displayMain: document.getElementById('displayMain'),
+                    displayExpression: document.getElementById('displayExpression'),
+                    angleIndicator: document.getElementById('angleModeIndicator'),
+                    memoryIndicator: document.getElementById('memoryIndicator'),
+                    historyList: document.getElementById('historyList'),
+                    historyCount: document.getElementById('historyCount'),
+                    historyEmpty: document.getElementById('historyEmpty')
+                };
+
+                this.render();
+                this.renderHistory();
+            }
+
+            setAngleMode(mode) {
+                this.angleMode = mode;
+                this.dom.angleIndicator.textContent = mode;
+                this.dom.angleIndicator.style.display = 'inline-block';
+            }
+
+            toggleAngleMode() {
+                this.setAngleMode(this.angleMode === 'DEG' ? 'RAD' : 'DEG');
+            }
+
+            inputDigit(digit) {
+                soundFX.playClick(500);
+                soundFX.vibrate();
+
+                if (this.waitingForOperand) {
+                    this.currentInput = digit;
+                    this.waitingForOperand = false;
+                } else {
+                    if (this.currentInput === '0' && digit !== '.') {
+                        this.currentInput = digit;
+                    } else if (this.currentInput === '-0' && digit !== '.') {
+                        this.currentInput = '-' + digit;
+                    } else {
+                        // Max 16 digits
+                        if (this.currentInput.replace(/[^0-9]/g, '').length < 16) {
+                            this.currentInput += digit;
+                        }
+                    }
+                }
+                this.render();
+            }
+
+            inputDecimal() {
+                soundFX.playClick(550);
+                soundFX.vibrate();
+
+                if (this.waitingForOperand) {
+                    this.currentInput = '0.';
+                    this.waitingForOperand = false;
+                    this.render();
+                    return;
+                }
+
+                if (!this.currentInput.includes('.')) {
+                    this.currentInput += '.';
+                }
+                this.render();
+            }
+
+            handleOperator(nextOperator) {
+                soundFX.playOperator();
+                soundFX.vibrate();
+
+                const inputValue = parseFloat(this.currentInput);
+
+                if (this.operator && this.waitingForOperand) {
+                    this.operator = nextOperator;
+                    this.previousInput = `${this.formatDisplayNumber(this.firstOperand)} ${this.getOperatorSymbol(nextOperator)}`;
+                    this.render();
+                    return;
+                }
+
+                if (this.firstOperand == null && !isNaN(inputValue)) {
+                    this.firstOperand = inputValue;
+                } else if (this.operator) {
+                    const result = this.calculate(this.firstOperand, inputValue, this.operator);
+                    if (result === 'Error') {
+                        this.currentInput = 'Error';
+                        this.render();
+                        return;
+                    }
+                    this.currentInput = `${this.roundPrecision(result)}`;
+                    this.firstOperand = result;
+                }
+
+                this.waitingForOperand = true;
+                this.operator = nextOperator;
+                this.previousInput = `${this.formatDisplayNumber(this.firstOperand)} ${this.getOperatorSymbol(nextOperator)}`;
+                this.render();
+            }
+
+            getOperatorSymbol(op) {
+                switch (op) {
+                    case 'add': return '+';
+                    case 'subtract': return '−';
+                    case 'multiply': return '×';
+                    case 'divide': return '÷';
+                    case 'power': return '^';
+                    default: return '';
+                }
+            }
+
+            calculate(firstOperand, secondOperand, operator) {
+                switch (operator) {
+                    case 'add': return firstOperand + secondOperand;
+                    case 'subtract': return firstOperand - secondOperand;
+                    case 'multiply': return firstOperand * secondOperand;
+                    case 'divide': 
+                        if (secondOperand === 0) return 'Error';
+                        return firstOperand / secondOperand;
+                    case 'power': return Math.pow(firstOperand, secondOperand);
+                    default: return secondOperand;
+                }
+            }
+
+            performEquals() {
+                soundFX.playEquals();
+                soundFX.vibrate();
+
+                if (this.operator == null || this.firstOperand == null) {
+                    return;
+                }
+
+                const inputValue = parseFloat(this.currentInput);
+                const fullExpression = `${this.formatDisplayNumber(this.firstOperand)} ${this.getOperatorSymbol(this.operator)} ${this.formatDisplayNumber(inputValue)}`;
+                const result = this.calculate(this.firstOperand, inputValue, this.operator);
+
+                if (result === 'Error') {
+                    this.currentInput = 'Error';
+                    this.previousInput = fullExpression + ' =';
+                    this.firstOperand = null;
+                    this.operator = null;
+                    this.waitingForOperand = true;
+                    this.render();
+                    return;
+                }
+
+                const rounded = this.roundPrecision(result);
+                this.addHistory(fullExpression, rounded);
+
+                this.previousInput = fullExpression + ' =';
+                this.currentInput = `${rounded}`;
+                this.firstOperand = null;
+                this.operator = null;
+                this.waitingForOperand = true;
+                this.render();
+            }
+
+            performScientific(func) {
+                soundFX.playOperator();
+                soundFX.vibrate();
+
+                let val = parseFloat(this.currentInput);
+                let result = 0;
+                let exprLabel = '';
+
+                const toRad = deg => (deg * Math.PI) / 180;
+                const toDeg = rad => (rad * 180) / Math.PI;
+
+                switch (func) {
+                    case 'sin':
+                        result = Math.sin(this.angleMode === 'DEG' ? toRad(val) : val);
+                        exprLabel = `sin(${val})`;
+                        break;
+                    case 'cos':
+                        result = Math.cos(this.angleMode === 'DEG' ? toRad(val) : val);
+                        exprLabel = `cos(${val})`;
+                        break;
+                    case 'tan':
+                        result = Math.tan(this.angleMode === 'DEG' ? toRad(val) : val);
+                        exprLabel = `tan(${val})`;
+                        break;
+                    case 'asin':
+                        if (val < -1 || val > 1) { result = 'Error'; }
+                        else {
+                            result = Math.asin(val);
+                            if (this.angleMode === 'DEG') result = toDeg(result);
+                        }
+                        exprLabel = `sin⁻¹(${val})`;
+                        break;
+                    case 'acos':
+                        if (val < -1 || val > 1) { result = 'Error'; }
+                        else {
+                            result = Math.acos(val);
+                            if (this.angleMode === 'DEG') result = toDeg(result);
+                        }
+                        exprLabel = `cos⁻¹(${val})`;
+                        break;
+                    case 'atan':
+                        result = Math.atan(val);
+                        if (this.angleMode === 'DEG') result = toDeg(result);
+                        exprLabel = `tan⁻¹(${val})`;
+                        break;
+                    case 'sqrt':
+                        if (val < 0) { result = 'Error'; }
+                        else { result = Math.sqrt(val); }
+                        exprLabel = `√(${val})`;
+                        break;
+                    case 'square':
+                        result = Math.pow(val, 2);
+                        exprLabel = `(${val})²`;
+                        break;
+                    case 'reciprocal':
+                        if (val === 0) { result = 'Error'; }
+                        else { result = 1 / val; }
+                        exprLabel = `1/(${val})`;
+                        break;
+                    case 'abs':
+                        result = Math.abs(val);
+                        exprLabel = `|${val}|`;
+                        break;
+                    case 'log':
+                        if (val <= 0) { result = 'Error'; }
+                        else { result = Math.log10(val); }
+                        exprLabel = `log(${val})`;
+                        break;
+                    case 'ln':
+                        if (val <= 0) { result = 'Error'; }
+                        else { result = Math.log(val); }
+                        exprLabel = `ln(${val})`;
+                        break;
+                    case 'pi':
+                        result = Math.PI;
+                        exprLabel = 'π';
+                        break;
+                    case 'e':
+                        result = Math.E;
+                        exprLabel = 'e';
+                        break;
+                    case 'factorial':
+                        if (val < 0 || !Number.isInteger(val) || val > 170) {
+                            result = 'Error';
+                        } else {
+                            result = this.factorial(val);
+                        }
+                        exprLabel = `${val}!`;
+                        break;
+                    default:
+                        return;
+                }
+
+                if (result === 'Error') {
+                    this.currentInput = 'Error';
+                } else {
+                    const rounded = this.roundPrecision(result);
+                    this.addHistory(exprLabel, rounded);
+                    this.currentInput = `${rounded}`;
+                }
+
+                this.previousInput = exprLabel + ' =';
+                this.waitingForOperand = true;
+                this.render();
+            }
+
+            factorial(n) {
+                if (n === 0 || n === 1) return 1;
+                let res = 1;
+                for (let i = 2; i <= n; i++) res *= i;
+                return res;
+            }
+
+            negate() {
+                soundFX.playClick(450);
+                soundFX.vibrate();
+                if (this.currentInput === '0') return;
+                this.currentInput = (parseFloat(this.currentInput) * -1).toString();
+                this.render();
+            }
+
+            percent() {
+                soundFX.playClick(450);
+                soundFX.vibrate();
+                const val = parseFloat(this.currentInput);
+                const result = val / 100;
+                this.currentInput = `${this.roundPrecision(result)}`;
+                this.render();
+            }
+
+            backspace() {
+                soundFX.playClick(400);
+                soundFX.vibrate();
+                if (this.waitingForOperand || this.currentInput === 'Error') {
+                    this.currentInput = '0';
+                    this.render();
+                    return;
+                }
+
+                if (this.currentInput.length === 1 || (this.currentInput.length === 2 && this.currentInput.startsWith('-'))) {
+                    this.currentInput = '0';
+                } else {
+                    this.currentInput = this.currentInput.slice(0, -1);
+                }
+                this.render();
+            }
+
+            clearAll() {
+                soundFX.playClear();
+                soundFX.vibrate();
+                this.currentInput = '0';
+                this.previousInput = '';
+                this.firstOperand = null;
+                this.operator = null;
+                this.waitingForOperand = false;
+                this.render();
+            }
+
+            clearEntry() {
+                soundFX.playClear();
+                soundFX.vibrate();
+                this.currentInput = '0';
+                this.render();
+            }
+
+            // Memory Operations
+            memoryAdd() {
+                soundFX.playClick(700);
+                this.memory += parseFloat(this.currentInput) || 0;
+                this.updateMemoryIndicator();
+                this.waitingForOperand = true;
+            }
+
+            memorySubtract() {
+                soundFX.playClick(700);
+                this.memory -= parseFloat(this.currentInput) || 0;
+                this.updateMemoryIndicator();
+                this.waitingForOperand = true;
+            }
+
+            memoryRecall() {
+                soundFX.playClick(750);
+                this.currentInput = `${this.roundPrecision(this.memory)}`;
+                this.waitingForOperand = true;
+                this.render();
+            }
+
+            memoryClear() {
+                soundFX.playClear();
+                this.memory = 0;
+                this.updateMemoryIndicator();
+            }
+
+            updateMemoryIndicator() {
+                if (this.memory !== 0) {
+                    this.dom.memoryIndicator.style.display = 'inline-block';
+                } else {
+                    this.dom.memoryIndicator.style.display = 'none';
+                }
+            }
+
+            roundPrecision(num, decimals = 10) {
+                if (typeof num !== 'number' || isNaN(num)) return num;
+                return parseFloat(Math.round(num + 'e' + decimals) + 'e-' + decimals);
+            }
+
+            formatDisplayNumber(val) {
+                if (val === 'Error') return 'Error';
+                const parts = val.toString().split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                return parts.join('.');
+            }
+
+            addHistory(expression, result) {
+                const entry = {
+                    expression,
+                    result,
+                    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                };
+                this.history.unshift(entry);
+                if (this.history.length > 50) this.history.pop();
+                localStorage.setItem('omnicalc_history', JSON.stringify(this.history));
+                this.renderHistory();
+            }
+
+            renderHistory() {
+                const count = this.history.length;
+                this.dom.historyCount.textContent = count;
+                this.dom.historyCount.style.display = count > 0 ? 'flex' : 'none';
+
+                if (count === 0) {
+                    this.dom.historyEmpty.style.display = 'flex';
+                    this.dom.historyList.querySelectorAll('.history-item').forEach(el => el.remove());
+                    return;
+                }
+
+                this.dom.historyEmpty.style.display = 'none';
+                this.dom.historyList.querySelectorAll('.history-item').forEach(el => el.remove());
+
+                this.history.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'history-item';
+                    div.innerHTML = `
+                        <div class="history-item-top">
+                            <span class="history-item-time">${item.timestamp}</span>
+                            <span class="history-item-expr">${item.expression}</span>
+                        </div>
+                        <div class="history-item-result">=${item.result}</div>
+                    `;
+                    div.addEventListener('click', () => {
+                        this.currentInput = `${item.result}`;
+                        this.waitingForOperand = true;
+                        this.render();
+                        // Close drawer
+                        document.getElementById('historyDrawer').classList.remove('open');
+                        soundFX.playClick(600);
+                    });
+                    this.dom.historyList.appendChild(div);
+                });
+            }
+
+            clearHistory() {
+                soundFX.playClear();
+                this.history = [];
+                localStorage.removeItem('omnicalc_history');
+                this.renderHistory();
+            }
+
+            render() {
+                let formatted = this.formatDisplayNumber(this.currentInput);
+                this.dom.displayMain.textContent = formatted;
+                this.dom.displayExpression.textContent = this.previousInput;
+
+                // Adjust font size dynamically for long numbers
+                const len = formatted.length;
+                if (len > 14) {
+                    this.dom.displayMain.style.fontSize = '1.75rem';
+                } else if (len > 10) {
+                    this.dom.displayMain.style.fontSize = '2.3rem';
+                } else {
+                    this.dom.displayMain.style.fontSize = '3.2rem';
+                }
+            }
+        }
+
+        const calc = new Calculator();
+
+        /**
+         * Cash & Change Denominations Calculator
+         * (Based on Philippine Peso denominations constant)
+         */
+        const DENOMINATIONS = [
+            { name: '1,000 Peso Bill', value: 1000.00, type: 'bill', color: '#1d4ed8' },
+            { name: '500 Peso Bill', value: 500.00, type: 'bill', color: '#b45309' },
+            { name: '200 Peso Bill', value: 200.00, type: 'bill', color: '#15803d' },
+            { name: '100 Peso Bill', value: 100.00, type: 'bill', color: '#be185d' },
+            { name: '50 Peso Bill', value: 50.00, type: 'bill', color: '#c2410c' },
+            { name: '20 Peso Bill', value: 20.00, type: 'bill', color: '#b91c1c' },
+            { name: '10 Peso Coin', value: 10.00, type: 'coin', color: '#ca8a04' },
+            { name: '5 Peso Coin', value: 5.00, type: 'coin', color: '#64748b' },
+            { name: '1 Peso Coin', value: 1.00, type: 'coin', color: '#71717a' },
+            { name: '25 Centavo Coin', value: 0.25, type: 'coin', color: '#d97706' },
+            { name: '10 Centavo Coin', value: 0.10, type: 'coin', color: '#d97706' },
+            { name: '5 Centavo Coin', value: 0.05, type: 'coin', color: '#d97706' },
+            { name: '1 Centavo Coin', value: 0.01, type: 'coin', color: '#d97706' }
+        ];
+
+        function addQuickCash(amount) {
+            soundFX.playClick(650);
+            const paidInput = document.getElementById('cashPaid');
+            const current = parseFloat(paidInput.value) || 0;
+            paidInput.value = (current + amount).toFixed(2);
+            computeChange();
+        }
+
+        function setExactCash() {
+            soundFX.playClick(650);
+            const price = parseFloat(document.getElementById('cashPrice').value) || 0;
+            document.getElementById('cashPaid').value = price > 0 ? price.toFixed(2) : '';
+            computeChange();
+        }
+
+        function resetCashCalculator() {
+            soundFX.playClear();
+            document.getElementById('cashPrice').value = '';
+            document.getElementById('cashPaid').value = '';
+            document.getElementById('changeSummaryCard').style.display = 'none';
+        }
+
+        function computeChange() {
+            soundFX.playOperator();
+            soundFX.vibrate();
+
+            const priceInput = document.getElementById('cashPrice');
+            const paidInput = document.getElementById('cashPaid');
+            const summaryCard = document.getElementById('changeSummaryCard');
+            const amountEl = document.getElementById('totalChangeAmount');
+            const statusPill = document.getElementById('changeStatusPill');
+            const grid = document.getElementById('denominationsGrid');
+
+            const price = parseFloat(priceInput.value);
+            const paid = parseFloat(paidInput.value);
+
+            if (isNaN(price) || isNaN(paid)) {
+                summaryCard.style.display = 'none';
+                return;
+            }
+
+            if (paid < price) {
+                const deficit = (price - paid).toFixed(2);
+                summaryCard.style.display = 'block';
+                amountEl.textContent = `Short: ₱${deficit}`;
+                amountEl.style.color = '#ef4444';
+                statusPill.className = 'change-status-pill status-warning';
+                statusPill.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Insufficient Payment';
+                grid.innerHTML = `<div class="denomination-notice">Customer still needs to pay ₱${deficit} to settle this transaction.</div>`;
+                return;
+            }
+
+            let change = Math.round((paid - price) * 100) / 100;
+            summaryCard.style.display = 'block';
+            amountEl.textContent = `₱${change.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            amountEl.style.color = 'var(--accent-emerald)';
+
+            if (change === 0) {
+                statusPill.className = 'change-status-pill status-exact';
+                statusPill.innerHTML = '<i class="fa-solid fa-check-double"></i> Exact Amount';
+                grid.innerHTML = `<div class="denomination-notice">Exact payment tendered. No change required!</div>`;
+                return;
+            }
+
+            statusPill.className = 'change-status-pill status-success';
+            statusPill.innerHTML = '<i class="fa-solid fa-hand-holding-dollar"></i> Change Due';
+
+            grid.innerHTML = '';
+            let remaining = change;
+
+            DENOMINATIONS.forEach(denom => {
+                const count = Math.floor(Math.round(remaining * 100) / Math.round(denom.value * 100));
+                if (count > 0) {
+                    remaining = Math.round((remaining - count * denom.value) * 100) / 100;
+
+                    const item = document.createElement('div');
+                    item.className = `denom-card ${denom.type}`;
+                    item.innerHTML = `
+                        <div class="denom-count-badge">${count}×</div>
+                        <div class="denom-details">
+                            <span class="denom-name">${denom.name}</span>
+                            <span class="denom-subtotal">Subtotal: ₱${(count * denom.value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        </div>
+                        <div class="denom-icon"><i class="${denom.type === 'bill' ? 'fa-solid fa-money-bill' : 'fa-solid fa-circle-dot'}"></i></div>
+                    `;
+                    grid.appendChild(item);
+                }
+            });
+        }
+
+        // Live calculation when inputs change
+        document.getElementById('cashPrice').addEventListener('input', computeChange);
+        document.getElementById('cashPaid').addEventListener('input', computeChange);
+
+        /**
+         * Button Action Delegation & Mode Tabs
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mode Switcher Tabs
+            const modeTabs = document.querySelectorAll('.mode-tab');
+            const keypadPanels = document.querySelectorAll('.keypad-panel');
+            const calcDisplay = document.getElementById('calcDisplaySection');
+
+            modeTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    soundFX.playClick(700);
+                    const mode = tab.dataset.mode;
+
+                    modeTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    keypadPanels.forEach(p => p.classList.remove('active'));
+
+                    if (mode === 'standard') {
+                        document.getElementById('standardKeypad').classList.add('active');
+                        calcDisplay.style.display = 'block';
+                        calc.dom.angleIndicator.style.display = 'none';
+                    } else if (mode === 'scientific') {
+                        document.getElementById('scientificKeypad').classList.add('active');
+                        calcDisplay.style.display = 'block';
+                        calc.setAngleMode(calc.angleMode);
+                    } else if (mode === 'cash') {
+                        document.getElementById('cashKeypad').classList.add('active');
+                        calcDisplay.style.display = 'none';
+                    }
+                });
+            });
+
+            // Standard & Scientific Keypad Click Handler
+            document.getElementById('calculatorCard').addEventListener('click', (e) => {
+                const btn = e.target.closest('.calc-btn');
+                if (!btn) return;
+
+                const number = btn.dataset.number;
+                const action = btn.dataset.action;
+
+                if (number !== undefined) {
+                    if (number === '00') {
+                        calc.inputDigit('0');
+                        calc.inputDigit('0');
+                    } else {
+                        calc.inputDigit(number);
+                    }
+                } else if (action) {
+                    switch (action) {
+                        case 'decimal': calc.inputDecimal(); break;
+                        case 'add':
+                        case 'subtract':
+                        case 'multiply':
+                        case 'divide':
+                        case 'power':
+                            calc.handleOperator(action);
+                            break;
+                        case 'equals': calc.performEquals(); break;
+                        case 'clear': calc.clearAll(); break;
+                        case 'clear-entry': calc.clearEntry(); break;
+                        case 'backspace': calc.backspace(); break;
+                        case 'negate': calc.negate(); break;
+                        case 'percent': calc.percent(); break;
+                        case 'mc': calc.memoryClear(); break;
+                        case 'mr': calc.memoryRecall(); break;
+                        case 'm-plus': calc.memoryAdd(); break;
+                        case 'm-minus': calc.memorySubtract(); break;
+                        case 'sin':
+                        case 'cos':
+                        case 'tan':
+                        case 'asin':
+                        case 'acos':
+                        case 'atan':
+                        case 'sqrt':
+                        case 'square':
+                        case 'reciprocal':
+                        case 'abs':
+                        case 'log':
+                        case 'ln':
+                        case 'pi':
+                        case 'e':
+                        case 'factorial':
+                            calc.performScientific(action);
+                            break;
+                        default: break;
+                    }
+                }
+            });
+
+            // DEG / RAD Toggle
+            const degRadBtn = document.getElementById('degRadToggle');
+            if (degRadBtn) {
+                degRadBtn.addEventListener('click', () => {
+                    soundFX.playClick(800);
+                    calc.toggleAngleMode();
+                });
+            }
+
+            // Copy to Clipboard Display Result
+            const copyBtn = document.getElementById('copyDisplayBtn');
+            const copyTooltip = document.getElementById('copyTooltip');
+            copyBtn.addEventListener('click', () => {
+                const text = calc.currentInput;
+                navigator.clipboard.writeText(text).then(() => {
+                    soundFX.playClick(900);
+                    copyTooltip.classList.add('show');
+                    setTimeout(() => copyTooltip.classList.remove('show'), 2000);
+                }).catch(() => {});
+            });
+
+            // History Drawer Toggles
+            const historyDrawer = document.getElementById('historyDrawer');
+            const historyToggleBtn = document.getElementById('historyToggleBtn');
+            const closeHistoryBtn = document.getElementById('closeHistoryBtn');
+            const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+
+            historyToggleBtn.addEventListener('click', () => {
+                soundFX.playClick(600);
+                historyDrawer.classList.toggle('open');
+            });
+
+            closeHistoryBtn.addEventListener('click', () => {
+                soundFX.playClick(500);
+                historyDrawer.classList.remove('open');
+            });
+
+            clearHistoryBtn.addEventListener('click', () => {
+                calc.clearHistory();
+            });
+
+            // Sound Toggle
+            const soundBtn = document.getElementById('soundToggleBtn');
+            const soundIcon = document.getElementById('soundIcon');
+            soundBtn.addEventListener('click', () => {
+                soundFX.enabled = !soundFX.enabled;
+                soundIcon.className = soundFX.enabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
+                soundBtn.classList.toggle('muted', !soundFX.enabled);
+                if (soundFX.enabled) soundFX.playClick(800);
+            });
+
+            // Themes Switcher (Obsidian, Midnight, Emerald, Titanium Light)
+            const themes = ['obsidian', 'midnight', 'emerald', 'titanium'];
+            let currentThemeIndex = 0;
+            const themeBtn = document.getElementById('themeToggleBtn');
+
+            themeBtn.addEventListener('click', () => {
+                currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+                const nextTheme = themes[currentThemeIndex];
+                document.documentElement.setAttribute('data-theme', nextTheme);
+                localStorage.setItem('omnicalc_theme', nextTheme);
+                soundFX.playClick(950);
+            });
+
+            const savedTheme = localStorage.getItem('omnicalc_theme');
+            if (savedTheme && themes.includes(savedTheme)) {
+                currentThemeIndex = themes.indexOf(savedTheme);
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            }
+
+            // Keyboard Shortcuts
+            window.addEventListener('keydown', (e) => {
+                // If focus is in an input field (e.g. Cash calculator inputs), don't intercept standard numbers
+                if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+                    return;
+                }
+
+                const key = e.key;
+
+                // Numbers 0-9
+                if (/^[0-9]$/.test(key)) {
+                    calc.inputDigit(key);
+                    triggerButtonHighlight(`[data-key="${key}"]`);
+                    return;
+                }
+
+                if (key === '.') {
+                    calc.inputDecimal();
+                    triggerButtonHighlight('[data-key="."]');
+                    return;
+                }
+
+                if (key === '+' || key === '-') {
+                    calc.handleOperator(key === '+' ? 'add' : 'subtract');
+                    triggerButtonHighlight(`[data-key="${key}"]`);
+                    return;
+                }
+
+                if (key === '*' || key === 'x') {
+                    calc.handleOperator('multiply');
+                    triggerButtonHighlight('[data-key="*"]');
+                    return;
+                }
+
+                if (key === '/') {
+                    e.preventDefault();
+                    calc.handleOperator('divide');
+                    triggerButtonHighlight('[data-key="/"]');
+                    return;
+                }
+
+                if (key === 'Enter' || key === '=') {
+                    e.preventDefault();
+                    calc.performEquals();
+                    triggerButtonHighlight('[data-key="Enter"]');
+                    return;
+                }
+
+                if (key === 'Backspace') {
+                    calc.backspace();
+                    triggerButtonHighlight('[data-action="backspace"]');
+                    return;
+                }
+
+                if (key === 'Escape') {
+                    calc.clearAll();
+                    triggerButtonHighlight('[data-key="Escape"]');
+                    return;
+                }
+
+                if (key === '%') {
+                    calc.percent();
+                    triggerButtonHighlight('[data-key="%"]');
+                    return;
+                }
+
+                if (key === '^') {
+                    calc.handleOperator('power');
+                    return;
+                }
+            });
+
+            function triggerButtonHighlight(selector) {
+                const btn = document.querySelector(selector);
+                if (btn) {
+                    btn.classList.add('keyboard-active');
+                    setTimeout(() => btn.classList.remove('keyboard-active'), 150);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
